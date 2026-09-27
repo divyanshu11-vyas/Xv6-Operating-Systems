@@ -1,0 +1,38 @@
+                  ┌─────────────┐
+                  │    START    │
+                  └──────┬──────┘
+                         ↓
+               ┌──────────────────┐
+               │ read(0, buf, 512)│
+               └────────┬─────────┘
+                        ↓
+                   What is n?
+                   /     |     \
+                n=0     n<0    n>0
+                 |       |       |
+                 ↓       ↓       ↓
+               STOP    ERROR   write(1,
+                               buf, n)
+                                  |
+                                  ↓
+                             success?
+                              /    \
+                            no      yes
+                            ↓        |
+                          ERROR      |
+                                     |
+                   ┌─────────────────┘
+                   │
+                   └────→ read again
+
+
+cat comes from contatenation which here means
+-> Read data from a file or standard input and write that data to standard output.
+
+cat has no idea whether fd 0 is the keyboard, a file, 
+or a pipe — and it has no idea whether fd 1 is the console, 
+a file, or another program's input. It just reads from 0 and writes to 1. 
+Because of the fd convention, this tiny loop works correctly no matter where 
+input/output are actually connected. That's the whole point of the abstraction.
+
+
